@@ -1,0 +1,28 @@
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download project
+        uses: actions/checkout@v4
+
+      - name: Build APK
+        uses: barichello/godot-ci:4.3
+        with:
+          name: VoxelDunya
+          preset: Android
+          project: .
+          export_path: build/VoxelDunya.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: VoxelDunya-APK
+          path: build/VoxelDunya.apk
